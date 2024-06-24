@@ -7,6 +7,7 @@ import nodemailer from "nodemailer";
 import cors from "cors";
 import dbConnect from "./db/dbConnect.js";
 import NxentradeUser from "./db/nxentradeUser.js";
+import mjml2html from "mjml";
 
 dotenv.config();
 const app = express();
@@ -68,7 +69,7 @@ app.post("/sign-up", (req, res) => {
   bcrypt.hash(password, saltRounds, function (err, hash) {
     if (err) {
       return res.status(400).send({
-        message: "Password was not secured successufully, try again",
+        message: "Password was not secured successufully, try again.",
       });
     } else {
       const newUser = new NxentradeUser({
@@ -83,12 +84,53 @@ app.post("/sign-up", (req, res) => {
             message: "Something went wrong. Please try again.",
           });
         }
-
         transport.sendMail({
           from: companyEmail,
           to: email,
           subject: "Account Verification",
-          html: `<a href=https://nxentrade.com/emailverification/${newUser.confirmationCode}>Verify account</a>`,
+          html: mjml2html(`
+            <mjml>
+            <head>
+                <preview>
+            Buy and sell cryptocurrency easily with bank transfer
+            
+            </preview>
+            </head>
+            
+        <mj-body>
+          <mj-section background-color='#ffffff' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif'>
+            <mj-column margin='0 auto'
+      padding='20px 0 48px'>
+      <mj-text font-size='16px'
+      line-height='26px'>Hi there,</mj-text>
+      <mj-text font-size='16px'
+      line-height='26px'>Welcome to NxenTrade, the marketplace for
+                buying and selling cryptocurrencies at standard rates. Use the button bellow to verify your account.</mj-text>
+                <mj-section textAlign='center'>
+                  <mj-button padding='12px 12px'
+      background-color='#2563eb'
+      border-radius='3px'
+      color='#fff'
+      font-size='16px'
+      text-decoration='none' 
+      text-align='center'
+      display='block' href=https://nxentrade.com/emailverification/${newUser.confirmationCode}>Verify Account</mj-button>
+                </mj-section>
+     <mj-text font-size='16px'
+      line-height='26px'>Best, <mj-spacer height="10px" />The NxenTrade team. </mj-text>
+    
+      <mj-divider border-width="1px" border-style="dashed" border-color="lightgrey" />
+    
+      <mj-text color='#8898aa'
+      font-size='12px'>if you did not request this email, you can safely ingnore it. </mj-text>
+      
+      </mj-column>
+          </mj-section>
+        </mj-body>
+      </mjml>
+        
+        
+        `),
         });
 
         res.status(201).send({
@@ -112,7 +154,7 @@ app.get("/verifying/:token", (req, res) => {
         .then(() => {
           return res
             .status(200)
-            .send({ message: "Successful, you can now login" });
+            .send({ message: "Successful, you can now login." });
         })
         .catch((error) => {
           return res.status(401).send({
@@ -159,7 +201,49 @@ app.post("/sign-in", (req, res) => {
           from: companyEmail,
           to: email,
           subject: "Account Verification",
-          html: `<a href=https://nxentrade.com/emailverification/${newUser.confirmationCode}>Verify account</a>`,
+          html: mjml2html(`
+            <mjml>
+            <head>
+                <preview>
+            Buy and sell cryptocurrency easily with bank transfer
+            
+            </preview>
+            </head>
+            
+        <mj-body>
+          <mj-section background-color='#ffffff' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif'>
+            <mj-column margin='0 auto'
+      padding='20px 0 48px'>
+      <mj-text font-size='16px'
+      line-height='26px'>Hi there,</mj-text>
+      <mj-text font-size='16px'
+      line-height='26px'>Welcome to NxenTrade, the marketplace for
+                buying and selling cryptocurrencies at standard rates. Use the button bellow to verify your account.</mj-text>
+                <mj-section textAlign='center'>
+                  <mj-button padding='12px 12px'
+      background-color='#2563eb'
+      border-radius='3px'
+      color='#fff'
+      font-size='16px'
+      text-decoration='none' 
+      text-align='center'
+      display='block' href=https://nxentrade.com/emailverification/${newUser.confirmationCode}>Verify Account</mj-button>
+                </mj-section>
+     <mj-text font-size='16px'
+      line-height='26px'>Best, <mj-spacer height="10px" />The NxenTrade team. </mj-text>
+    
+      <mj-divider border-width="1px" border-style="dashed" border-color="lightgrey" />
+    
+      <mj-text color='#8898aa'
+      font-size='12px'>if you did not request this email, you can safely ingnore it. </mj-text>
+      
+      </mj-column>
+          </mj-section>
+        </mj-body>
+      </mjml>
+        
+        
+        `),
         });
 
         res.status(200).send({
@@ -193,6 +277,5 @@ app.get("/authenticating/:id", (req, res) => {
       });
     });
 });
-
 
 export default app;
