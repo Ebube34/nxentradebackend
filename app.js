@@ -7,7 +7,6 @@ import nodemailer from "nodemailer";
 import cors from "cors";
 import dbConnect from "./db/dbConnect.js";
 import NxentradeUser from "./db/nxentradeUser.js";
-import mjml2html from "mjml";
 
 dotenv.config();
 const app = express();
@@ -88,49 +87,27 @@ app.post("/sign-up", (req, res) => {
           from: companyEmail,
           to: email,
           subject: "Account Verification",
-          html: mjml2html(`
-            <mjml>
-            <head>
-                <preview>
-            Buy and sell cryptocurrency easily with bank transfer
-            
-            </preview>
-            </head>
-            
-        <mj-body>
-          <mj-section background-color='#ffffff' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif'>
-            <mj-column margin='0 auto'
-      padding='20px 0 48px'>
-      <mj-text font-size='16px'
-      line-height='26px'>Hi there,</mj-text>
-      <mj-text font-size='16px'
-      line-height='26px'>Welcome to NxenTrade, the marketplace for
-                buying and selling cryptocurrencies at standard rates. Use the button bellow to verify your account.</mj-text>
-                <mj-section textAlign='center'>
-                  <mj-button padding='12px 12px'
-      background-color='#2563eb'
-      border-radius='3px'
-      color='#fff'
-      font-size='16px'
-      text-decoration='none' 
-      text-align='center'
-      display='block' href=https://nxentrade.com/emailverification/${newUser.confirmationCode}>Verify Account</mj-button>
-                </mj-section>
-     <mj-text font-size='16px'
-      line-height='26px'>Best, <mj-spacer height="10px" />The NxenTrade team. </mj-text>
+          html: `<section style="background-color:#ffffff; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif">
+            <div style="margin:0 auto;
+      padding:20px 0 48px">
+      <p style="font-size:16px;
+      line-height:26px">Hi there,</p>
+      <p style="font-size:16px;
+      line-height:26px">Welcome to NxenTrade, the marketplace for
+                buying and selling cryptocurrencies at standard rates. Use the button bellow to verify your account.</p>
+                <section style="textAlign:center">
+                  <a style="padding:12px 12px; background-color:#2563eb;border-radius:3px; color:#fff; font-size:16px; text-decoration:none; text-align:center; display:block" href="https://nxentrade.com/emailverification/${newUser.confirmationCode}">Verify Account</a>
+                </section>
+     <p style="font-size:16px;
+      line-height:26px">Best, <br /> The NxenTrade team.</p>
     
-      <mj-divider border-width="1px" border-style="dashed" border-color="lightgrey" />
+      <hr style="border-width:1px; border-style:dashed; border-color:lightgrey" />
     
-      <mj-text color='#8898aa'
-      font-size='12px'>if you did not request this email, you can safely ingnore it. </mj-text>
-      
-      </mj-column>
-          </mj-section>
-        </mj-body>
-      </mjml>
-        
-        
-        `),
+      <p style="color:#8898aa;
+      font-size:12px">if you did not request this email, you can safely ingnore it. </p>  
+      <div>
+          <section>   
+        `,
         });
 
         res.status(201).send({
@@ -201,49 +178,27 @@ app.post("/sign-in", (req, res) => {
           from: companyEmail,
           to: email,
           subject: "Account Verification",
-          html: mjml2html(`
-            <mjml>
-            <head>
-                <preview>
-            Buy and sell cryptocurrency easily with bank transfer
-            
-            </preview>
-            </head>
-            
-        <mj-body>
-          <mj-section background-color='#ffffff' font-family='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif'>
-            <mj-column margin='0 auto'
-      padding='20px 0 48px'>
-      <mj-text font-size='16px'
-      line-height='26px'>Hi there,</mj-text>
-      <mj-text font-size='16px'
-      line-height='26px'>Welcome to NxenTrade, the marketplace for
-                buying and selling cryptocurrencies at standard rates. Use the button bellow to verify your account.</mj-text>
-                <mj-section textAlign='center'>
-                  <mj-button padding='12px 12px'
-      background-color='#2563eb'
-      border-radius='3px'
-      color='#fff'
-      font-size='16px'
-      text-decoration='none' 
-      text-align='center'
-      display='block' href=https://nxentrade.com/emailverification/${newUser.confirmationCode}>Verify Account</mj-button>
-                </mj-section>
-     <mj-text font-size='16px'
-      line-height='26px'>Best, <mj-spacer height="10px" />The NxenTrade team. </mj-text>
+          html: `<section style="background-color:#ffffff; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif">
+            <div style="margin:0 auto;
+      padding:20px 0 48px">
+      <p style="font-size:16px;
+      line-height:26px">Hi there,</p>
+      <p style="font-size:16px;
+      line-height:26px">Welcome to NxenTrade, the marketplace for
+                buying and selling cryptocurrencies at standard rates. Use the button bellow to verify your account.</p>
+                <section style="textAlign:center">
+                  <a style="padding:12px 12px; background-color:#2563eb;border-radius:3px; color:#fff; font-size:16px; text-decoration:none; text-align:center; display:block" href="https://nxentrade.com/emailverification/${newUser.confirmationCode}">Verify Account</a>
+                </section>
+     <p style="font-size:16px;
+      line-height:26px">Best, <br /> The NxenTrade team.</p>
     
-      <mj-divider border-width="1px" border-style="dashed" border-color="lightgrey" />
+      <hr style="border-width:1px; border-style:dashed; border-color:lightgrey" />
     
-      <mj-text color='#8898aa'
-      font-size='12px'>if you did not request this email, you can safely ingnore it. </mj-text>
-      
-      </mj-column>
-          </mj-section>
-        </mj-body>
-      </mjml>
-        
-        
-        `),
+      <p style="color:#8898aa;
+      font-size:12px">if you did not request this email, you can safely ingnore it. </p>  
+      <div>
+          <section>   
+        `,
         });
 
         res.status(200).send({
