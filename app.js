@@ -83,21 +83,21 @@ app.post("/sign-up", (req, res) => {
             message: "Something went wrong. Please try again.",
           });
         }
+        // <a href='https://postimages.org/' target='_blank'><img style="margin:0 auto; width:100%; height:150px" src='https://i.postimg.cc/YqdSTTCQ/nxentrade-logo-sign-board.png' border='0' alt='nxentrade-logo-sign-board'/></a>
         transport.sendMail({
           from: companyEmail,
           to: email,
           subject: "Account Verification",
           html: `<section style="background-color:#ffffff; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif">
             <div style="margin:0 auto;
-      padding:20px 0 48px">
-      <a href='https://postimages.org/' target='_blank'><img style="margin:0 auto; width:100%; height:150px" src='https://i.postimg.cc/YqdSTTCQ/nxentrade-logo-sign-board.png' border='0' alt='nxentrade-logo-sign-board'/></a>
+      padding:20px 0 48px">  
       <p style="font-size:16px;
       line-height:26px">Hi there,</p>
       <p style="font-size:16px;
       line-height:26px">Welcome to NxenTrade, the marketplace for
                 buying and selling cryptocurrencies at standard rates. Use the button bellow to verify your account.</p>
                 <section style="textAlign:center">
-                  <a style="padding:12px 12px; background-color:#2563eb;border-radius:3px; color:#fff; font-size:16px; text-decoration:none; text-align:center; display:block" href="https://nxentrade.com/emailverification/${newUser.confirmationCode}">Verify Account</a>
+                  <a style="padding:12px 12px; background-color:#272E3F;border-radius:3px; color:#fff; font-size:16px; text-decoration:none; text-align:center; display:block" href="https://nxentrade.com/emailverification/${newUser.confirmationCode}">Verify Account</a>
                 </section>
      <p style="font-size:16px;
       line-height:26px">Best, <br /> The NxenTrade team.</p>
