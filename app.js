@@ -83,7 +83,7 @@ app.post("/sign-up", (req, res) => {
             message: "Something went wrong. Please try again.",
           });
         }
-        
+
         transport.sendMail({
           from: companyEmail,
           to: email,
@@ -164,7 +164,6 @@ app.post("/sign-in", (req, res) => {
               res.status(200).send({
                 message: "Login Successful.",
                 userId: user._id,
-                email: user.email,
               });
             }
           })
@@ -216,22 +215,20 @@ app.post("/sign-in", (req, res) => {
     });
 });
 
-app.get("/authenticating/:id", (req, res) => {
-  const id = req.params.id;
+app.post("/authenticating", (req, res) => {
+  const id = req.body.id
 
-  NxentradeUser.findOne({ id: id })
+  NxentradeUser.findOne({ _id: id })
     .then((user) => {
       res.status(200).send({
-        message: "Successful.",
-        email: user.email,
-      });
-    })
-    .catch((err) => {
+        userEmail: user.email
+      })
+    }).catch((error) => {
       res.status(404).send({
-        message: "Id not found.",
-        err,
-      });
-    });
+        message: "Error fetching user email.",
+        error
+      })
+    })
 });
 
 export default app;
