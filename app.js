@@ -217,8 +217,8 @@ app.post("/sign-in", (req, res) => {
     });
 });
 
-app.post("/authenticating", (req, res) => {
-  const id = req.body.id
+app.get("/authenticating/:id", (req, res) => {
+  const id = req.params.id
 
   NxentradeUser.findOne({ _id: id })
     .then((user) => {
