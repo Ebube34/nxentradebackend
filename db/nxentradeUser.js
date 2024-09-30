@@ -13,6 +13,10 @@ const NxentradeUserSchema = new mongoose.Schema({
         type: String,
         unique: true
     },
+    username: {
+        type: String,
+        unique: false
+    },
     status: {
         type: String, 
         enum: ['Pending', 'Active'],

@@ -56,6 +56,7 @@ app.get("/", (req, res, next) => {
 app.post("/sign-up", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
+  const name = req.body.name;
 
   const token = jwt.sign(
     {
@@ -75,6 +76,7 @@ app.post("/sign-up", (req, res) => {
         email: email,
         password: hash,
         confirmationCode: token,
+        username: name
       });
 
       newUser.save(function (err) {
@@ -92,10 +94,10 @@ app.post("/sign-up", (req, res) => {
             <div style="margin:0 auto;
       padding:20px 0 48px"> 
       <p style="font-size:16px;
-      line-height:26px">Hi there,</p>
+      line-height:26px">Hi ${newUser.username}</p>
       <p style="font-size:16px;
       line-height:26px">Welcome to NxenTrade, the marketplace for
-                buying and selling cryptocurrencies at standard rates. Use the button bellow to verify your account.</p>
+                buying and selling cryptocurrencies using local currency at standard rates. Use the button bellow to verify your account.</p>
                 <section style="textAlign:center">
                   <a style="padding:12px 12px; background-color:#272E3F;border-radius:3px; color:#fff; font-size:16px; text-decoration:none; text-align:center; display:block" href="https://nxentrade.com/emailverification/${newUser.confirmationCode}">Verify Account</a>
                 </section>
@@ -221,7 +223,7 @@ app.post("/authenticating", (req, res) => {
   NxentradeUser.findOne({ _id: id })
     .then((user) => {
       res.status(200).send({
-        userEmail: user.email
+        username: user.username
       })
     }).catch((error) => {
       res.status(404).send({
