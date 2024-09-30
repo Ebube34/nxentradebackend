@@ -223,7 +223,8 @@ app.get("/authenticating/:id", (req, res) => {
   NxentradeUser.findOne({ _id: id })
     .then((user) => {
       res.status(200).send({
-        username: user.username
+        username: user.username,
+        userEmail: user.email
       })
     }).catch((error) => {
       res.status(404).send({
