@@ -48,7 +48,7 @@ const transport = nodemailer.createTransport({
 
 app.get("/", (req, res, next) => {
   res.json({
-    message: "Hey! This is your QuivasFinance application server response!",
+    message: "Hey! This is your Nxentrade application server response!",
   });
   next();
 });
