@@ -13,9 +13,9 @@ const NxentradeUserSchema = new mongoose.Schema({
         type: String,
         unique: true
     },
-    username: {
+    usernamne: {
         type: String,
-        unique: false
+        unique: true
     },
     status: {
         type: String, 

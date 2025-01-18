@@ -56,7 +56,8 @@ app.get("/", (req, res, next) => {
 app.post("/sign-up", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-  const name = req.body.name;
+  const username = req.body.username
+
 
   const token = jwt.sign(
     {
@@ -69,14 +70,14 @@ app.post("/sign-up", (req, res) => {
   bcrypt.hash(password, saltRounds, function (err, hash) {
     if (err) {
       return res.status(400).send({
-        message: "Password was not secured successufully, try again.",
+        message: "Password was not secured successufully, Please try again.",
       });
     } else {
       const newUser = new NxentradeUser({
         email: email,
         password: hash,
         confirmationCode: token,
-        username: name
+        usernamne: username
       });
 
       newUser.save(function (err) {
@@ -94,7 +95,7 @@ app.post("/sign-up", (req, res) => {
             <div style="margin:0 auto;
       padding:20px 0 48px"> 
       <p style="font-size:16px;
-      line-height:26px">Hi ${newUser.username}</p>
+      line-height:26px">Hi ${newUser.usernamne}</p>
       <p style="font-size:16px;
       line-height:26px">Welcome to NxenTrade, the marketplace for
                 buying and selling cryptocurrencies using local currency at standard rates. Use the button bellow to verify your account.</p>
@@ -152,15 +153,19 @@ app.get("/verifying/:token", (req, res) => {
 });
 
 app.post("/sign-in", (req, res) => {
-  NxentradeUser.findOne({ email: req.body.email })
+  const email = req.body.email
+  const password = req.body.password
+
+  
+  NxentradeUser.findOne({ email: email })
     .then((user) => {
       if (user.status === "Active") {
         bcrypt
-          .compare(req.body.password, user.password)
+          .compare(password, user.password)
           .then((passwordCheck) => {
             if (!passwordCheck) {
               return res.status(401).json({
-                message: "Incorrect password.",
+                message: "Incorrect password Please try again",
               });
             } else {
               res.status(200).send({
@@ -171,7 +176,7 @@ app.post("/sign-in", (req, res) => {
           })
           .catch((errors) => {
             res.status(402).send({
-              message: "Incorrect password.",
+              message: "couldn't compare password, Please try again",
               errors,
             });
           });
@@ -189,7 +194,7 @@ app.post("/sign-in", (req, res) => {
       line-height:26px">Welcome to NxenTrade, the marketplace for
                 buying and selling cryptocurrencies at standard rates. Use the button bellow to verify your account.</p>
                 <section style="textAlign:center">
-                  <a style="padding:12px 12px; background-color:#2563eb;border-radius:3px; color:#fff; font-size:16px; text-decoration:none; text-align:center; display:block" href="https://nxentrade.com/emailverification/${newUser.confirmationCode}">Verify Account</a>
+                  <a style="padding:12px 12px; background-color:#2563eb;border-radius:3px; color:#fff; font-size:16px; text-decoration:none; text-align:center; display:block" href="https://nxentrade.com/emailverification/${user.confirmationCode}">Verify Account</a>
                 </section>
      <p style="font-size:16px;
       line-height:26px">Best, <br /> The NxenTrade team.</p>
@@ -211,7 +216,7 @@ app.post("/sign-in", (req, res) => {
     })
     .catch((e) => {
       res.status(404).send({
-        message: "Email not found.",
+        message: "This username was not found Please check your username",
         e,
       });
     });
@@ -223,7 +228,7 @@ app.get("/authenticating/:id", (req, res) => {
   NxentradeUser.findOne({ _id: id })
     .then((user) => {
       res.status(200).send({
-        username: user.username,
+        username: user.usernamne,
         userEmail: user.email
       })
     }).catch((error) => {
